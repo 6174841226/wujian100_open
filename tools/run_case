@@ -16,6 +16,7 @@ use FileHandle;
 use File::Basename;
 use Term::ANSIColor;
 use strict;
+use Env;
 no strict 'refs';
 my $wujian100_open_PATH = `pwd`;
 chomp($wujian100_open_PATH);
@@ -24,6 +25,7 @@ $wujian100_open_PATH =~ s/wujian100_open.*/wujian100_open\//;
 my $com_dir = `pwd`;
 chomp($com_dir);
 my $work;
+my $cmd;
 
 $work = "$wujian100_open_PATH\/workdir";
 chdir($work);
@@ -117,7 +119,7 @@ my $path;
 my $case;
 my $case_file;
 my $case_make;
-my $had_v;
+my $had_v="";
 my @file;
 foreach(@ARGV){
 	if(/(.*\/)(.*)/){
@@ -228,15 +230,21 @@ my $vcs_incdir = " +incdir+../workdir"
                         ."+../tb";
 
 my  $g_novas_pli;
-my  $PLItab;
+my  $PLItab="";
 
 
 
 my $top_mod;
 
   $top_mod = "$wujian100_open_PATH/tb/tb.v ";
-if($s_vcs) {
-	!system("vcs +v2k -Mupdate -sverilog   $mnt_sim $dump_sim +nospecify +notimingchecks -timescale=1ns/100ps  $top_mod   $wujian100_open_PATH/workdir/$had_v $vcs_incdir $g_vlib_path  $PLItab  ") or die "can't run VCS";}
+if($s_vcs) 
+{
+	
+	$cmd  = "vcs ";
+	$cmd .= "-full64 -cpp g++-4.8 -cc gcc-4.8 -LDFLAGS -Wl,-no-as-needed ";
+	$cmd .= "-l vcs.log +v2k -Mupdate -sverilog   $mnt_sim $dump_sim +nospecify +notimingchecks -timescale=1ns/100ps  $top_mod   $wujian100_open_PATH/workdir/$had_v $vcs_incdir $g_vlib_path  $PLItab  ";
+	print $cmd;
+	!system("$cmd  ") or die "can't run VCS";}
 elsif($s_iverilog){
 	!system("iverilog -o test.vvp -Diverilog=1 -g2012 ../tb/busmnt.v  ../tb/tb.v ../tb/virtual_counter.v -f ../soc/wujian100_open_syn_for_iverilog.filelist -f ../soc/wujian100_open_lib_for_iverilog.filelist $wujian100_open_PATH/workdir/$had_v") or die "can't run iverilog";
         !system("vvp test.vvp") or die "can't run vvp";
