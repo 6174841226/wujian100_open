@@ -19,12 +19,12 @@
 # Get Started
     1. prepare a project work directory just like 'Project'
     2. cd Project
-    3. git clone https://github.com/T-head-Semi/wujian100_open.git or git clone git@github.com:T-head-Semi/wujian100_open.git
-# Download C/C++ Compiler
+    3. git clone https://github.com/6174841226/wujian100_open.git or git clone git@github.com:6174841226/wujian100_open.git
+# Download C/C++ Compiler(Can be skiped)
     1. prepare a tool chain install directory named 'riscv_toolchain'  // use the c shell command like 'mkdir riscv_toolchain'
     2. download the tool chain from the url https://www.t-head.cn/product/mcu-platform?spm=a2ouz.12987052.0.0.167548abiiSAQs
     3. install the tool chain to the riscv_toolchain dirctory
-# Get open source EDA tools
+# Get open source EDA tools (Use VCS, skip the vendor tool)
     centos7/rhel7:  sudo yum install iverilog verilator gtkwave
     ubuntu/debian:  sudo apt-get install iverilog verilator gtkwave
 # Get ready for simulation
